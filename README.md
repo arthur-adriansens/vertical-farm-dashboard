@@ -41,7 +41,7 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-# ⚠️ License
+## ⚠️ License
 
 This project is licensed under a custom "All rights reserved" license.  
 You may not copy, modify, distribute, or use any part of this code without explicit written permission from the author.
