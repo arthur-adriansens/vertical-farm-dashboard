@@ -25,7 +25,7 @@ export function NavMain({ items }) {
                 <SidebarMenu>
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
-                            <a href={item.url || "#"} className={item.disabled !== undefined && "cursor-not-allowed"}>
+                            <a href={item.url || "#"} className={item.disabled !== undefined ? "cursor-not-allowed" : ""}>
                                 <SidebarMenuButton tooltip={item.title} disabled={item.disabled !== undefined} className={"cursor-pointer"}>
                                     {item.icon && <item.icon />}
                                     <span>{item.title}</span>

@@ -3,9 +3,15 @@ import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { DataTable } from "@/components/data-table";
 import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
+import { Calendar10 } from "@/components/calendar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import data from "./data.json";
+
+import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Page() {
     return (
@@ -17,15 +23,23 @@ export default function Page() {
             <AppSidebar variant="inset" />
             <SidebarInset>
                 <SiteHeader header_title={"Galerij"} />
-                <div className="flex flex-1 flex-col">
-                    <div className="@container/main flex flex-1 flex-col gap-2">
-                        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                            <SectionCards />
-                            <div className="px-4 lg:px-6">
-                                <ChartAreaInteractive />
-                            </div>
-                            <DataTable data={data} />
+                <div className="@container/main flex flex-1 flex-col gap-2">
+                    <div
+                        className="px-4 lg:px-6 grid gap-4 lg:gap-6 py-4 md:gap-6 md:py-6"
+                        style={{ gridTemplateColumns: "minmax(250px, 1fr) auto" }}
+                    >
+                        <div className="grid gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 *:data-[slot=card]:shadow-xs">
+                            {new Array(4).fill(0).map((image_url, i) => (
+                                <Card className="@container/card pt-0 overflow-clip h-fit" key={i}>
+                                    <img src="/plant.webp" />
+                                    <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                                        <div className="text-muted-foreground">12/11/2025 - 21:34</div>
+                                    </CardFooter>
+                                </Card>
+                            ))}
                         </div>
+
+                        <Calendar10 />
                     </div>
                 </div>
             </SidebarInset>
