@@ -1,14 +1,10 @@
-# Astro Starter Kit: Minimal
+# Vertical Farm Dashboard
 
-```sh
-npm create astro@latest -- --template minimal
-```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The dashboard of our awesome automatic vertical farm!
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
+Inside of the project, you'll need the following folders and files:
 
 ```text
 /
@@ -16,7 +12,14 @@ Inside of your Astro project, you'll see the following folders and files:
 ├── src/
 │   └── pages/
 │       └── index.astro
+│   └── layouts/
+│       └── Layout.astro
+│   └── styles/
+│       └── global.css
 └── package.json
+└── astro.config.mjs
+└── components.json
+└── README.md
 ```
 
 Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
@@ -38,6 +41,8 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+# ⚠️ License
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This project is licensed under a custom "All rights reserved" license.  
+You may not copy, modify, distribute, or use any part of this code without explicit written permission from the author.
+See the full [LICENSE](./LICENSE) file for details.
