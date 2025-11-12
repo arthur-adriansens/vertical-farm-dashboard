@@ -11,7 +11,7 @@ const data = {
     navMain: [
         {
             title: "Power Data",
-            url: "#",
+            url: "/",
             icon: IconDashboard,
         },
         {
@@ -20,8 +20,8 @@ const data = {
             icon: IconDroplets,
         },
         {
-            title: "Foto's",
-            url: "#",
+            title: "Galerij",
+            url: "/gallery",
             icon: IconPhoto,
         },
         {
@@ -33,6 +33,7 @@ const data = {
             title: "Analytics",
             url: "#",
             icon: IconChartBar,
+            disabled: true,
         },
     ],
     navSecondary: [

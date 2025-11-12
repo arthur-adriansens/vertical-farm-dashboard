@@ -1,0 +1,10 @@
+---
+import "../styles/global.css";
+import Layout from "../layouts/Layout.astro";
+
+import Page from "../app/dashboard/gallery";
+---
+
+<Layout title="Galerij">
+    <Page client:load="react" />
+</Layout>
