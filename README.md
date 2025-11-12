@@ -11,11 +11,13 @@ Inside of the project, you'll need the following folders and files:
 ├── public/
 ├── src/
 │   └── pages/
-│       └── index.astro
+│       └── index.astro (main page)
 │   └── layouts/
 │       └── Layout.astro
 │   └── styles/
 │       └── global.css
+│   └── components/ (holds Shadcn/ui and React components)
+│   └── app/ddashboard/ (holds main React components for each page)
 └── package.json
 └── astro.config.mjs
 └── components.json

@@ -8,6 +8,9 @@
     "dist"
   ],
   "compilerOptions": {
+    "checkJs": false,
+    "noEmit": true,
+    "strict": false,
     "baseUrl": ".",
     "paths": {
       "@/*": [
