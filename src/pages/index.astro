@@ -7,4 +7,14 @@ import Page from "../app/dashboard/power-usage";
 
 <Layout title="Power Usage Dashboard">
     <Page client:load="react" />
+
+    <style is:inline>
+        .dark #fixScrollbar {
+            color-scheme: dark;
+        }
+
+        #fixScrollbar {
+            color-scheme: light;
+        }
+    </style>
 </Layout>

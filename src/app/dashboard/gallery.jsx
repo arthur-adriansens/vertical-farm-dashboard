@@ -21,7 +21,7 @@ export default function Page() {
             }}
         >
             <AppSidebar variant="inset" selected_url={"/gallery"} />
-            <SidebarInset>
+            <SidebarInset className="max-h-[calc(100vh-1rem)] overflow-hidden">
                 <SiteHeader header_title={"Galerij"} />
                 <div className="@container/main flex flex-1 flex-col gap-2 h-[calc(100%-3rem)]">
                     <div

@@ -16,7 +16,7 @@ const data = {
         },
         {
             title: "Overige Data",
-            url: "#",
+            url: "/data",
             icon: IconDroplets,
         },
         {

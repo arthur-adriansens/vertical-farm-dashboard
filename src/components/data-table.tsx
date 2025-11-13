@@ -379,7 +379,7 @@ export function DataTable({ data: initialData }) {
                 </div>
             </div>
             <TabsContent value="outline" className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
-                <div className="overflow-hidden rounded-lg border">
+                <div className="overflow-hidden rounded-lg border" id="fixScrollbar">
                     <DndContext
                         collisionDetection={closestCenter}
                         modifiers={[restrictToVerticalAxis]}
