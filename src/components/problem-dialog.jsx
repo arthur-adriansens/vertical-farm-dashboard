@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -19,13 +21,23 @@ import { IconAlertTriangleFilled, IconMail } from "@tabler/icons-react";
 
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 
+export const dialogEvents = new EventTarget();
+
 export function ProblemDialog() {
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const listener = () => setOpen(true);
+        dialogEvents.addEventListener("open", listener);
+        return () => dialogEvents.removeEventListener("open", listener);
+    }, []);
+
     function updateSelectInput(value) {
         document.getElementById("problemCategory").value = value;
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <form action="/api/postProblem" method="post">
                 <DialogTrigger asChild>
                     <SidebarMenuButton

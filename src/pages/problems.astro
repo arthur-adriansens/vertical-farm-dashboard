@@ -1,0 +1,20 @@
+---
+import "../styles/global.css";
+import Layout from "../layouts/Layout.astro";
+
+import Page from "../app/dashboard/problems";
+---
+
+<Layout title="Problemen">
+    <Page client:load="react" />
+
+    <style is:inline>
+        .dark #fixScrollbar {
+            color-scheme: dark;
+        }
+
+        #fixScrollbar {
+            color-scheme: light;
+        }
+    </style>
+</Layout>

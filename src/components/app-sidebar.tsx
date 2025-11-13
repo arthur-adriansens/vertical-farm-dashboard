@@ -26,7 +26,7 @@ const data = {
         },
         {
             title: "Problemen",
-            url: "#",
+            url: "/problems",
             icon: IconMessageExclamation,
         },
         {

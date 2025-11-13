@@ -1,12 +1,7 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import { ChartAreaInteractive } from "@/components/chart-area-interactive";
-import { DataTable } from "@/components/data-table";
-import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
 import { Calendar10 } from "@/components/calendar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-
-import data from "./data.json";
 
 import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
 
@@ -30,7 +25,7 @@ export default function Page() {
                     >
                         <div
                             id="fixScrollbar"
-                            className="grid gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 *:data-[slot=card]:shadow-xs overflow-y-scroll pr-4 lg:pr-6"
+                            className="grid gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 *:data-[slot=card]:shadow-xs overflow-y-auto pr-4 lg:pr-6"
                         >
                             {new Array(20).fill(0).map((image_url, i) => (
                                 <Card className="@container/card pt-0 overflow-clip h-fit" key={i}>
