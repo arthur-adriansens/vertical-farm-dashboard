@@ -23,13 +23,16 @@ export default function Page() {
             <AppSidebar variant="inset" selected_url={"/gallery"} />
             <SidebarInset>
                 <SiteHeader header_title={"Galerij"} />
-                <div className="@container/main flex flex-1 flex-col gap-2">
+                <div className="@container/main flex flex-1 flex-col gap-2 h-[calc(100%-3rem)]">
                     <div
-                        className="px-4 lg:px-6 grid gap-4 lg:gap-6 py-4 md:gap-6 md:py-6"
+                        className="px-4 lg:px-6 grid gap-4 lg:gap-6 py-4 md:gap-6 md:py-6 overflow-hidden max-h-full"
                         style={{ gridTemplateColumns: "minmax(250px, 1fr) auto" }}
                     >
-                        <div className="grid gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 *:data-[slot=card]:shadow-xs">
-                            {new Array(10).fill(0).map((image_url, i) => (
+                        <div
+                            id="fixScrollbar"
+                            className="grid gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 *:data-[slot=card]:shadow-xs overflow-y-scroll pr-4 lg:pr-6"
+                        >
+                            {new Array(20).fill(0).map((image_url, i) => (
                                 <Card className="@container/card pt-0 overflow-clip h-fit" key={i}>
                                     <img src="/plant.webp" />
                                     <CardFooter className="flex-col items-start gap-1.5 text-sm">
