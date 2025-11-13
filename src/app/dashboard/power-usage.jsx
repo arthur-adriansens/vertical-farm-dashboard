@@ -14,7 +14,7 @@ export default function Page() {
                 "--header-height": "calc(var(--spacing) * 12)",
             }}
         >
-            <AppSidebar variant="inset" />
+            <AppSidebar variant="inset" selected_url={"/"} />
             <SidebarInset>
                 <SiteHeader header_title={"Power Data"} />
                 <div className="flex flex-1 flex-col">

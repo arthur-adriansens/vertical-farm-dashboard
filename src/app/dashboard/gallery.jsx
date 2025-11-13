@@ -20,7 +20,7 @@ export default function Page() {
                 "--header-height": "calc(var(--spacing) * 12)",
             }}
         >
-            <AppSidebar variant="inset" />
+            <AppSidebar variant="inset" selected_url={"/gallery"} />
             <SidebarInset>
                 <SiteHeader header_title={"Galerij"} />
                 <div className="@container/main flex flex-1 flex-col gap-2">
@@ -29,7 +29,7 @@ export default function Page() {
                         style={{ gridTemplateColumns: "minmax(250px, 1fr) auto" }}
                     >
                         <div className="grid gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 *:data-[slot=card]:shadow-xs">
-                            {new Array(4).fill(0).map((image_url, i) => (
+                            {new Array(10).fill(0).map((image_url, i) => (
                                 <Card className="@container/card pt-0 overflow-clip h-fit" key={i}>
                                     <img src="/plant.webp" />
                                     <CardFooter className="flex-col items-start gap-1.5 text-sm">

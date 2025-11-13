@@ -3,6 +3,7 @@
 import * as React from "react";
 
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { DarkModeButton } from "@/components/dark-mode-button";
 
 export function NavSecondary({ items, ...props }) {
     return (
@@ -19,6 +20,7 @@ export function NavSecondary({ items, ...props }) {
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}
+                    <DarkModeButton />
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>

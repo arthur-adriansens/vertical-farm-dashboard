@@ -42,15 +42,10 @@ const data = {
             url: "#",
             icon: IconPalette,
         },
-        {
-            title: "Donkere Modus",
-            url: "#",
-            icon: IconMoon,
-        },
     ],
 };
 
-export function AppSidebar({ ...props }) {
+export function AppSidebar({ selected_url, ...props }) {
     return (
         <Sidebar collapsible="offcanvas" {...props}>
             <SidebarHeader>
@@ -66,7 +61,7 @@ export function AppSidebar({ ...props }) {
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <NavMain items={data.navMain} />
+                <NavMain items={data.navMain} selected_url={selected_url} />
                 {/* <NavDocuments items={data.documents} /> */}
                 <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>

@@ -11,6 +11,19 @@ const { title } = Astro.props;
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{title || "Vertical Farm Dashboard"}</title>
+
+        <script>
+            const userPreference = localStorage.getItem("theme");
+            document.documentElement.classList.toggle(
+                "dark",
+                userPreference ? userPreference == "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches
+            );
+
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+                document.documentElement.classList.toggle("dark", e.matches);
+                localStorage.removeItem("theme");
+            });
+        </script>
     </head>
 
     <body>

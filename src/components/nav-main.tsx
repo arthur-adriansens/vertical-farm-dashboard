@@ -3,7 +3,7 @@ import { IconAlertTriangleFilled, IconMail } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 
-export function NavMain({ items }) {
+export function NavMain({ items, selected_url }) {
     return (
         <SidebarGroup>
             <SidebarGroupContent className="flex flex-col gap-2">
@@ -26,7 +26,12 @@ export function NavMain({ items }) {
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
                             <a href={item.url || "#"} className={item.disabled !== undefined ? "cursor-not-allowed" : ""}>
-                                <SidebarMenuButton tooltip={item.title} disabled={item.disabled !== undefined} className={"cursor-pointer"}>
+                                <SidebarMenuButton
+                                    isActive={selected_url == item.url}
+                                    tooltip={item.title}
+                                    disabled={item.disabled !== undefined}
+                                    className={"cursor-pointer"}
+                                >
                                     {item.icon && <item.icon />}
                                     <span>{item.title}</span>
                                 </SidebarMenuButton>
