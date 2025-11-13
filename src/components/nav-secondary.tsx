@@ -12,14 +12,15 @@ export function NavSecondary({ items, ...props }) {
                 <SidebarMenu>
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton asChild>
-                                <a href={item.url}>
+                            <a href={item.url} className={item.disabled !== undefined ? "cursor-not-allowed" : ""}>
+                                <SidebarMenuButton disabled={item.disabled !== undefined} tooltip={item.title}>
                                     <item.icon />
                                     <span>{item.title}</span>
-                                </a>
-                            </SidebarMenuButton>
+                                </SidebarMenuButton>
+                            </a>
                         </SidebarMenuItem>
                     ))}
+
                     <DarkModeButton />
                 </SidebarMenu>
             </SidebarGroupContent>

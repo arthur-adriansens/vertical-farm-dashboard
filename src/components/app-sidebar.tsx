@@ -41,6 +41,7 @@ const data = {
             title: "Kleur",
             url: "#",
             icon: IconPalette,
+            disabled: true,
         },
     ],
 };
