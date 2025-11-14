@@ -3,10 +3,14 @@ import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 
 import Page from "../app/dashboard/problems";
+
+import { sql } from "../lib/neon";
+
+const issues = await sql`SELECT * FROM issues`;
 ---
 
 <Layout title="Problemen">
-    <Page client:load="react" />
+    <Page client:load="react" problems={issues} />
 
     <style is:inline>
         .dark #fixScrollbar {

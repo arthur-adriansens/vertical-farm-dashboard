@@ -2,16 +2,37 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle, CardContent, CardAction } from "@/components/ui/card";
 
-import { IconCloud } from "@tabler/icons-react";
+import { IconCloud, IconCheck } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 
 import { dialogEvents } from "@/components/problem-dialog";
 
-export default function Page() {
-    const problems = new Array(0).fill(0); // db call...
+export default function Page({ problems }) {
+    async function removeProblem(event, problemIndex) {
+        const problem = problems[problemIndex];
+        if (!problem?.id) return;
+
+        event.target.disabled = true;
+
+        try {
+            const response = await fetch("/api/removeProblem", {
+                method: "POST",
+                body: JSON.stringify({ id: problem.id }),
+            });
+
+            if (response.body) {
+                const body = await response.text();
+                console.log(body);
+                event.target.remove();
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+        }
+    }
 
     return (
         <SidebarProvider
@@ -33,10 +54,33 @@ export default function Page() {
                                 className="grid gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 *:data-[slot=card]:shadow-xs overflow-y-auto pr-4 lg:pr-6"
                             >
                                 {problems.map((card, i) => (
-                                    <Card className="@container/card pt-0 overflow-clip h-fit" key={i}>
-                                        <img src="/plant.webp" />
+                                    <Card className="@container/card" key={i}>
+                                        <CardHeader>
+                                            <CardTitle>{card.category} Probleem</CardTitle>
+                                            <CardDescription>{card.name}</CardDescription>
+                                            <CardAction>
+                                                <Button variant="outline" size="sm" onClick={(event) => removeProblem(event, i)}>
+                                                    <IconCheck />
+                                                    Verwijder probleem
+                                                </Button>
+                                            </CardAction>
+                                        </CardHeader>
+
+                                        <CardContent>{card.discription}</CardContent>
+
                                         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-                                            <div className="text-muted-foreground">12/11/2025 - 21:34</div>
+                                            <div className="text-muted-foreground capitalize">
+                                                {new Date(card.added).toLocaleString("nl-NL", {
+                                                    weekday: "short",
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "numeric",
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                    second: "2-digit",
+                                                    timeZoneName: "shortOffset",
+                                                })}
+                                            </div>
                                         </CardFooter>
                                     </Card>
                                 ))}
@@ -51,7 +95,7 @@ export default function Page() {
                                     <IconCloud />
                                 </EmptyMedia>
                                 <EmptyTitle>Geen Problemen</EmptyTitle>
-                                <EmptyDescription>Momenteel ondervindt ons team geen problemen. Alles loopt volgens verwacht.</EmptyDescription>
+                                <EmptyDescription>Momenteel ondervindt ons team geen problemen. Alles loopt zoals verwacht.</EmptyDescription>
                             </EmptyHeader>
                             <EmptyContent>
                                 <Button variant="outline" size="sm" onClick={() => dialogEvents.dispatchEvent(new Event("open"))}>

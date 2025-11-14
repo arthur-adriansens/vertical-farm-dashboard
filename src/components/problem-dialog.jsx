@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -36,28 +37,63 @@ export function ProblemDialog() {
         document.getElementById("problemCategory").value = value;
     }
 
+    async function handleSubmit(e) {
+        e.preventDefault();
+        e.target.querySelector("button[type=submit]").disabled = true;
+        const formData = new FormData(e.target);
+
+        try {
+            const response = await fetch("/api/postProblem", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.body) {
+                const body = await response.text();
+                document.querySelector("#dialogDescription").innerHTML = body;
+                document.getElementById("formFields").classList.add("hidden");
+
+                setTimeout(
+                    () => {
+                        setOpen(false);
+                        e.target.querySelector("button[type=submit]").disabled = false;
+                        window.location.reload();
+                    },
+                    response.status == 201 ? "1000" : "2000"
+                );
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            setOpen(false);
+            e.target.querySelector("button[type=submit]").disabled = false;
+        }
+    }
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <form action="/api/postProblem" method="post">
-                <DialogTrigger asChild>
-                    <SidebarMenuButton
-                        tooltip="Rapporteer Probleem"
-                        className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear cursor-pointer"
-                    >
-                        <IconAlertTriangleFilled />
-                        <span>Rapporteer Probleem</span>
-                    </SidebarMenuButton>
-                </DialogTrigger>
+            <DialogTrigger asChild>
+                <SidebarMenuButton
+                    tooltip="Rapporteer Probleem"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear cursor-pointer"
+                >
+                    <IconAlertTriangleFilled />
+                    <span>Rapporteer Probleem</span>
+                </SidebarMenuButton>
+            </DialogTrigger>
 
-                <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px]">
+                <form onSubmit={handleSubmit} style={{ display: "contents" }}>
                     <DialogHeader>
                         <DialogTitle>Rapporteer een probleem</DialogTitle>
                         <DialogDescription>
-                            Hebt u iets vreemd opgemerkt in de data van de plant? Of een vreemde bug in de software? Rapporteer het dan hier aan ons
-                            team.
+                            <span id="dialogDescription">
+                                Hebt u iets vreemd opgemerkt in de data van de plant? Of een vreemde bug in de software? Rapporteer het dan hier aan
+                                ons team.
+                            </span>
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4">
+
+                    <div className="grid gap-4" id="formFields">
                         <div className="grid gap-3">
                             <Label htmlFor="name-1">Naam</Label>
                             <Input id="name-1" name="name" defaultValue="Anoniem" />
@@ -73,11 +109,11 @@ export function ProblemDialog() {
                                     <SelectItem value="Plant">Plant</SelectItem>
                                     <SelectItem value="Data">Data</SelectItem>
                                     <SelectItem value="Software">Software</SelectItem>
-                                    <SelectItem value="Andere">Andere</SelectItem>
+                                    <SelectItem value="Ander">Ander</SelectItem>
                                 </SelectContent>
                             </Select>
 
-                            <input type="hidden" name="problem-type" id="problemCategory" />
+                            <input type="hidden" name="category" id="problemCategory" />
                         </div>
 
                         <div className="grid gap-3">
@@ -85,14 +121,15 @@ export function ProblemDialog() {
                             <Textarea id="discription-1" name="discription" placeholder="Beschrijf het probleem" />
                         </div>
                     </div>
+
                     <DialogFooter>
                         <DialogClose asChild>
                             <Button variant="outline">Annuleer</Button>
                         </DialogClose>
                         <Button type="submit">Verzenden</Button>
                     </DialogFooter>
-                </DialogContent>
-            </form>
+                </form>
+            </DialogContent>
         </Dialog>
     );
 }
