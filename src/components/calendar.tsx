@@ -88,7 +88,7 @@ export function Calendar10() {
                     onMonthChange={setMonth}
                     selected={date}
                     onSelect={setDate}
-                    className="bg-transparent p-0"
+                    className="bg-transparent p-0 mx-auto md:mx-0"
                 />
             </CardContent>
         </Card>

@@ -48,3 +48,14 @@ All commands are run from the root of the project, from a terminal:
 This project is licensed under a custom "All rights reserved" license.  
 You may not copy, modify, distribute, or use any part of this code without explicit written permission from the author.
 See the full [LICENSE](./LICENSE) file for details.
+
+## Todo
+
+08:24:42 [WARN] [vite]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+
+-   Using dynamic import() to code-split the application
+-   Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+-   Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+import \* from React misschien niet gebruiken

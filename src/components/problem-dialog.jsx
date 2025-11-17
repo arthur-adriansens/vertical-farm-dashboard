@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { IconAlertTriangleFilled, IconMail } from "@tabler/icons-react";
+import { IconAlertTriangleFilled } from "@tabler/icons-react";
 
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 
