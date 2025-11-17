@@ -1,4 +1,3 @@
-import * as React from "react";
 import { IconChartBar, IconDashboard, IconMoon, IconPlant, IconDroplets, IconPhoto, IconMessageExclamation, IconPalette } from "@tabler/icons-react";
 
 import { NavDocuments } from "@/components/nav-documents";

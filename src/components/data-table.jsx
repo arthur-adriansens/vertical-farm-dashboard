@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useId, useMemo } from "react";
 import { closestCenter, DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
@@ -267,19 +267,19 @@ function DraggableRow({ row }) {
 }
 
 export function DataTable({ data: initialData }) {
-    const [data, setData] = React.useState(() => initialData);
-    const [rowSelection, setRowSelection] = React.useState({});
-    const [columnVisibility, setColumnVisibility] = React.useState({});
-    const [columnFilters, setColumnFilters] = React.useState([]);
-    const [sorting, setSorting] = React.useState([]);
-    const [pagination, setPagination] = React.useState({
+    const [data, setData] = useState(() => initialData);
+    const [rowSelection, setRowSelection] = useState({});
+    const [columnVisibility, setColumnVisibility] = useState({});
+    const [columnFilters, setColumnFilters] = useState([]);
+    const [sorting, setSorting] = useState([]);
+    const [pagination, setPagination] = useState({
         pageIndex: 0,
         pageSize: 10,
     });
-    const sortableId = React.useId();
+    const sortableId = useId();
     const sensors = useSensors(useSensor(MouseSensor, {}), useSensor(TouchSensor, {}), useSensor(KeyboardSensor, {}));
 
-    const dataIds = React.useMemo(() => data?.map(({ id }) => id) || [], [data]);
+    const dataIds = useMemo(() => data?.map(({ id }) => id) || [], [data]);
 
     const table = useReactTable({
         data,

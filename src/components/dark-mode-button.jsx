@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState, useEffect } from "react";
 
 import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { IconSunMoon, IconSun, IconMoon } from "@tabler/icons-react";
@@ -9,12 +9,12 @@ const stages = ["Automatisch", "Donkere Modus", "Lichte Modus"];
 const icons = [IconSunMoon, IconSun, IconMoon];
 
 export function DarkModeButton({ ...props }) {
-    const [isMounted, setIsMounted] = React.useState(false);
-    const [stage_index, setStage] = React.useState(0);
-    const [Icon, setIcon] = React.useState(icons[0]);
+    const [isMounted, setIsMounted] = useState(false);
+    const [stage_index, setStage] = useState(0);
+    const [Icon, setIcon] = useState(icons[0]);
 
     // Initialize state only on client to prevent hydration mismatch
-    React.useEffect(() => {
+    useEffect(() => {
         // setStage(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? 1 : 2);
         setStage(localStorage.getItem("theme") === "dark" ? 1 : localStorage.getItem("theme") === "light" ? 2 : 0);
         setIsMounted(true);

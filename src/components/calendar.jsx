@@ -1,20 +1,20 @@
 "use client";
 
-import * as React from "react";
+import { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function Calendar10() {
-    const [isMounted, setIsMounted] = React.useState(false);
-    const [date, setDate] = React.useState(undefined);
-    const [month, setMonth] = React.useState(undefined);
+    const [isMounted, setIsMounted] = useState(false);
+    const [date, setDate] = useState(undefined);
+    const [month, setMonth] = useState(undefined);
 
     const scrappedDates = Array.from({ length: 3 }, (_, i) => new Date(2025, 11 - 1, 13 + i));
 
     // Initialize state only on client to prevent hydration mismatch
-    React.useEffect(() => {
+    useEffect(() => {
         setDate(new Date(2025, 5, 12));
         setMonth(new Date());
         setIsMounted(true);
