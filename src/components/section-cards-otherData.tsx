@@ -9,7 +9,7 @@ export function SectionCards() {
             <Card className="@container/card">
                 <CardHeader>
                     <CardDescription>Maandelijks Water Verbruik</CardDescription>
-                    <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">25.00 L</CardTitle>
+                    <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">25,00 L</CardTitle>
                     <CardAction>
                         <Badge variant="outline">
                             <IconTrendingUp />
