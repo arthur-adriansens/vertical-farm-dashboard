@@ -2,7 +2,6 @@ import { sql } from "../../lib/neon";
 
 export const POST = async ({ request, redirect }) => {
     const form = await request.formData();
-    const origin = new URL(request.headers.get("referer"))?.pathname || "/";
 
     const { name, category, discription } = Object.fromEntries(form.entries());
     if (!name || !category || !discription) {

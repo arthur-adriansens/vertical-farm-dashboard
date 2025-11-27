@@ -1,6 +1,6 @@
 import { sql } from "../../lib/neon";
 
-export const POST = async ({ request }) => {
+export const DELETE = async ({ request }) => {
     const body = await request.json();
 
     if (!body?.id) {
