@@ -19,7 +19,7 @@ export default function Page({ problems }) {
 
         try {
             const response = await fetch("/api/removeProblem", {
-                method: "POST",
+                method: "DELETE",
                 body: JSON.stringify({ id: problem.id }),
             });
 
