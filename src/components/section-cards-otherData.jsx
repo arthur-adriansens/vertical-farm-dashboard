@@ -44,7 +44,7 @@ export function SectionCards() {
                 </CardFooter>
             </Card>
 
-            <Card className="@container/card">
+            {/* <Card className="@container/card">
                 <CardHeader>
                     <CardDescription>Gemiddelde Temperatuur</CardDescription>
                     <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">20°C</CardTitle>
@@ -53,7 +53,7 @@ export function SectionCards() {
                     <div className="line-clamp-1 flex gap-2 font-medium">Geen trend</div>
                     <div className="text-muted-foreground">Gemiddelde temperatuur deze maand</div>
                 </CardFooter>
-            </Card>
+            </Card> */}
 
             {/*<Card className="@container/card">
                 <CardHeader>

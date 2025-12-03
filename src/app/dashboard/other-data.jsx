@@ -5,9 +5,7 @@ import { SectionCards } from "@/components/section-cards-otherData";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-import data from "./data.json";
-
-export default function Page() {
+export default function Page({ powerdata }) {
     return (
         <SidebarProvider
             style={{
@@ -24,7 +22,7 @@ export default function Page() {
                             <div className="px-4 lg:px-6">
                                 <ChartAreaInteractive />
                             </div>
-                            <DataTable data={data} />
+                            <DataTable data={powerdata} />
                         </div>
                     </div>
                 </div>

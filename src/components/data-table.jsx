@@ -61,16 +61,6 @@ import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export const schema = z.object({
-    id: z.number(),
-    header: z.string(),
-    type: z.string(),
-    status: z.string(),
-    target: z.string(),
-    limit: z.string(),
-    reviewer: z.string(),
-});
-
 // Create a separate component for the drag handle
 function DragHandle({ id }) {
     const { attributes, listeners } = useSortable({
@@ -111,135 +101,29 @@ const columns = [
         enableHiding: false,
     },
     {
-        accessorKey: "header",
-        header: "Header",
-        cell: ({ row }) => {
-            return <TableCellViewer item={row.original} />;
-        },
-        enableHiding: false,
+        accessorKey: "id",
+        header: "Id",
+        cell: ({ row }) => <span>{row.original.id}</span>,
     },
     {
-        accessorKey: "type",
-        header: "Section Type",
-        cell: ({ row }) => (
-            <div className="w-32">
-                <Badge variant="outline" className="text-muted-foreground px-1.5">
-                    {row.original.type}
-                </Badge>
-            </div>
-        ),
+        accessorKey: "voltage",
+        header: "Voltage",
+        cell: ({ row }) => <span>{row.original.voltage} V</span>,
     },
     {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({ row }) => (
-            <Badge variant="outline" className="text-muted-foreground px-1.5">
-                {row.original.status === "Done" ? <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" /> : <IconLoader />}
-                {row.original.status}
-            </Badge>
-        ),
+        accessorKey: "bus voltage",
+        header: "Bus voltage",
+        cell: ({ row }) => <span>{row.original.bus_voltage} V</span>,
     },
     {
-        accessorKey: "target",
-        header: () => <div className="w-full text-right">Target</div>,
-        cell: ({ row }) => (
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-                        loading: `Saving ${row.original.header}`,
-                        success: "Done",
-                        error: "Error",
-                    });
-                }}
-            >
-                <Label htmlFor={`${row.original.id}-target`} className="sr-only">
-                    Target
-                </Label>
-                <Input
-                    className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
-                    defaultValue={row.original.target}
-                    id={`${row.original.id}-target`}
-                />
-            </form>
-        ),
+        accessorKey: "stroom",
+        header: "Stroom",
+        cell: ({ row }) => <span>{row.original.current} mA</span>,
     },
     {
-        accessorKey: "limit",
-        header: () => <div className="w-full text-right">Limit</div>,
-        cell: ({ row }) => (
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-                        loading: `Saving ${row.original.header}`,
-                        success: "Done",
-                        error: "Error",
-                    });
-                }}
-            >
-                <Label htmlFor={`${row.original.id}-limit`} className="sr-only">
-                    Limit
-                </Label>
-                <Input
-                    className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
-                    defaultValue={row.original.limit}
-                    id={`${row.original.id}-limit`}
-                />
-            </form>
-        ),
-    },
-    {
-        accessorKey: "reviewer",
-        header: "Reviewer",
-        cell: ({ row }) => {
-            const isAssigned = row.original.reviewer !== "Assign reviewer";
-
-            if (isAssigned) {
-                return row.original.reviewer;
-            }
-
-            return (
-                <>
-                    <Label htmlFor={`${row.original.id}-reviewer`} className="sr-only">
-                        Reviewer
-                    </Label>
-                    <Select>
-                        <SelectTrigger
-                            className="w-38 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
-                            size="sm"
-                            id={`${row.original.id}-reviewer`}
-                        >
-                            <SelectValue placeholder="Assign reviewer" />
-                        </SelectTrigger>
-                        <SelectContent align="end">
-                            <SelectItem value="Eddie Lake">Eddie Lake</SelectItem>
-                            <SelectItem value="Jamik Tashpulatov">Jamik Tashpulatov</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </>
-            );
-        },
-    },
-    {
-        id: "actions",
-        cell: () => (
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="data-[state=open]:bg-muted text-muted-foreground flex size-8" size="icon">
-                        <IconDotsVertical />
-                        <span className="sr-only">Open menu</span>
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-32">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Make a copy</DropdownMenuItem>
-                    <DropdownMenuItem>Favorite</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
-        ),
+        accessorKey: "vermogen",
+        header: "Vermogen",
+        cell: ({ row }) => <span>{row.original.power} W</span>,
     },
 ];
 
@@ -323,7 +207,7 @@ export function DataTable({ data: initialData }) {
                 <Label htmlFor="view-selector" className="sr-only">
                     View
                 </Label>
-                <Select defaultValue="outline">
+                {/* <Select defaultValue="outline">
                     <SelectTrigger className="flex w-fit @4xl/main:hidden" size="sm" id="view-selector">
                         <SelectValue placeholder="Select a view" />
                     </SelectTrigger>
@@ -343,7 +227,8 @@ export function DataTable({ data: initialData }) {
                         Key Personnel <Badge variant="secondary">2</Badge>
                     </TabsTrigger>
                     <TabsTrigger value="focus-documents">Focus Documents</TabsTrigger>
-                </TabsList>
+                </TabsList> */}
+
                 <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -372,12 +257,13 @@ export function DataTable({ data: initialData }) {
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Button variant="outline" size="sm">
+                    {/* <Button variant="outline" size="sm">
                         <IconPlus />
                         <span className="hidden lg:inline">Add Section</span>
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
+
             <TabsContent value="outline" className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
                 <div className="overflow-hidden rounded-lg border" id="fixScrollbar">
                     <DndContext
@@ -411,7 +297,7 @@ export function DataTable({ data: initialData }) {
                                 ) : (
                                     <TableRow>
                                         <TableCell colSpan={columns.length} className="h-24 text-center">
-                                            No results.
+                                            Geen resultaat.
                                         </TableCell>
                                     </TableRow>
                                 )}
@@ -456,7 +342,7 @@ export function DataTable({ data: initialData }) {
                                 onClick={() => table.setPageIndex(0)}
                                 disabled={!table.getCanPreviousPage()}
                             >
-                                <span className="sr-only">Go to first page</span>
+                                <span className="sr-only">Eerste pagina</span>
                                 <IconChevronsLeft />
                             </Button>
                             <Button
@@ -466,7 +352,7 @@ export function DataTable({ data: initialData }) {
                                 onClick={() => table.previousPage()}
                                 disabled={!table.getCanPreviousPage()}
                             >
-                                <span className="sr-only">Go to previous page</span>
+                                <span className="sr-only">Vorige pagina</span>
                                 <IconChevronLeft />
                             </Button>
                             <Button
@@ -476,7 +362,7 @@ export function DataTable({ data: initialData }) {
                                 onClick={() => table.nextPage()}
                                 disabled={!table.getCanNextPage()}
                             >
-                                <span className="sr-only">Go to next page</span>
+                                <span className="sr-only">Volgende pagina</span>
                                 <IconChevronRight />
                             </Button>
                             <Button
@@ -486,7 +372,7 @@ export function DataTable({ data: initialData }) {
                                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                                 disabled={!table.getCanNextPage()}
                             >
-                                <span className="sr-only">Go to last page</span>
+                                <span className="sr-only">Laatste pagina</span>
                                 <IconChevronsRight />
                             </Button>
                         </div>

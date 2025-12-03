@@ -3,8 +3,13 @@ import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 
 import Page from "../app/dashboard/other-data";
+
+import defaultData from "../app/dashboard/data.json";
+import { sql } from "../lib/neon";
+
+const powerdata = await sql`SELECT * FROM powerdata`;
 ---
 
 <Layout title="Other Data Dashboard">
-    <Page client:load="react" />
+    <Page client:load="react" powerdata={powerdata || defaultData} />
 </Layout>

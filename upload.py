@@ -7,7 +7,7 @@ data = {
     'voltage': '23.020 V',
     'bus_voltage': "0.01599 V",
     'current': '1598.000 mA',
-    'power': '3.8352 W'
+    'power': '5 W'
 }
 
 headers = {'Content-Type': 'application/json'}
