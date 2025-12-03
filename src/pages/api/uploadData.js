@@ -6,6 +6,7 @@ export const POST = async ({ request, redirect }) => {
 
     const numbersBody = Object.fromEntries(Object.entries(body).map(([k, v]) => [k, Number(String(v).split(" ")[0])]));
 
+    console.log(numbersBody);
     // Database insertion
     try {
         const [data] =
