@@ -23,9 +23,34 @@ export default function Page({ powerdata }) {
 
     const averagePower = useMemo(() => {
         return getAverage(powerdata);
-    }, []);
+    }, [powerdata]);
 
-    console.log(averagePower);
+    // Bereken kWh en dan gemiddeld kWh
+    const { averageEnergy, energyData } = useMemo(() => {
+        const totalWattPerDay = {};
+        const energyData = [];
+
+        powerdata.forEach((item) => {
+            const date = new Date(item.date);
+            const day = date.getDate();
+
+            if (!totalWattPerDay[day]) totalWattPerDay[day] = [0, 0];
+            totalWattPerDay[day][0] += Number(item.power);
+            totalWattPerDay[day][1] += 1;
+        });
+
+        for (let day in totalWattPerDay) {
+            const [sum, count] = totalWattPerDay[day]; // som van vermogens en aantal waarden (van die dag)
+            const averagePower = sum / count;
+            // const intervalSeconds = 86400 / count; // interval (om de hoeveel seconden een waarde is): 86400s per dag / count ==> ongeveer elke 45 seconden
+
+            const kWh = (averagePower * 24) / 1000;
+            energyData.push({ date: new Date(`${day} Dec 2025`), energy: kWh });
+        }
+
+        const totalEnergy = energyData.reduce((acc, curr) => acc + curr.energy, 0);
+        return { averageEnergy: totalEnergy / energyData.length, energyData };
+    }, [powerdata]);
 
     return (
         <SidebarProvider
@@ -39,9 +64,9 @@ export default function Page({ powerdata }) {
                 <div className="flex flex-1 flex-col">
                     <div className="@container/main flex flex-1 flex-col gap-2">
                         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                            <SectionCards averagePower={averagePower} />
+                            <SectionCards averagePower={averagePower} averageEnergy={averageEnergy} />
                             <div className="px-4 lg:px-6">
-                                <ChartAreaInteractive powerdata={powerdata} />
+                                <ChartAreaInteractive powerdata={powerdata} energyData={energyData} />
                             </div>
                             <DataTable data={powerdata} />
                         </div>

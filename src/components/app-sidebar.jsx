@@ -14,11 +14,6 @@ const data = {
             icon: IconDashboard,
         },
         {
-            title: "Overige Data",
-            url: "/data",
-            icon: IconDroplets,
-        },
-        {
             title: "Galerij",
             url: "/gallery",
             icon: IconPhoto,
@@ -27,6 +22,12 @@ const data = {
             title: "Problemen",
             url: "/problems",
             icon: IconMessageExclamation,
+        },
+        {
+            title: "Overige Data",
+            url: "#",
+            icon: IconDroplets,
+            disabled: true,
         },
         {
             title: "Analytics",

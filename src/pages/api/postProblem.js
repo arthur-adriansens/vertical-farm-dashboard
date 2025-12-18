@@ -9,8 +9,11 @@ export const POST = async ({ request, redirect }) => {
     }
 
     // Database insertion
-    const [data] = await sql`INSERT INTO issues (name, category, discription) VALUES (${name}, ${category}, ${discription}) RETURNING *`; // Safe from SQL injection
-    console.log(data);
+    try {
+        await sql`INSERT INTO issues (name, category, discription) VALUES (${name}, ${category}, ${discription})`; // Safe from SQL injection
+    } catch (error) {
+        return new Response("Er is iets <span style='color: red'>fout</span> verlopen met de database.", { status: 500 });
+    }
 
     return new Response("Bedankt om dit probleem <span style='color: green'>succesvol</span> te melden!", { status: 201 });
 };

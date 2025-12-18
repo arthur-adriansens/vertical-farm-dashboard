@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { useState, useEffect, useMemo } from "react";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ReferenceLine } from "recharts";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,7 +29,7 @@ function getMonday(d) {
     return new Date(d.setDate(diff));
 }
 
-export function ChartAreaInteractive({ powerdata }) {
+export function ChartAreaInteractive({ powerdata, energyData }) {
     const isMobile = useIsMobile();
     const [timeRange, setTimeRange] = useState("30d");
 
@@ -38,6 +38,10 @@ export function ChartAreaInteractive({ powerdata }) {
             setTimeRange("1d");
         }
     }, [isMobile]);
+
+    if (!timeRange) {
+        setTimeRange("30d"); // prevents from selecting nothing
+    }
 
     // Bepaal startdag grafiek
     const referenceDate = new Date(); // vandaag
@@ -51,28 +55,17 @@ export function ChartAreaInteractive({ powerdata }) {
 
     startDate.setHours(0, 1);
 
-    const filledDays = []; // bewaart welke dagen we data van hebben (en dus welke niet achteraf)
+    const totalWattPerDay = {}; // voor kWh te berkenen
+
     const filteredData = powerdata.filter((item) => {
         const date = new Date(item.date);
 
-        if (!filledDays.includes(date.getDay())) filledDays.push(date.getDay());
+        if (!totalWattPerDay[date.getDate()]) totalWattPerDay[date.getDate()] = [0, 0];
+        totalWattPerDay[date.getDate()][0] += Number(item.power);
+        totalWattPerDay[date.getDate()][1] += 1;
 
         return date >= startDate;
     });
-
-    // vul gemiste dagen tussen start and vandaag (1 item per dag)
-    for (let day = 1; day <= referenceDate.getDay(); day++) {
-        if (!filledDays.includes(day)) {
-            filteredData.push({
-                id: 0,
-                voltage: "0",
-                bus_voltage: "0",
-                current: "0",
-                power: "0",
-                date: new Date(referenceDate.getFullYear(), referenceDate.getMonth(), day, 0, 1),
-            });
-        }
-    }
 
     return (
         <Card className="@container/card">
@@ -136,6 +129,8 @@ export function ChartAreaInteractive({ powerdata }) {
 
                         <CartesianGrid vertical={false} />
 
+                        <YAxis dataKey="power" width={32} tickLine={false} axisLine={false} tickMargin={8} type="number" />
+
                         <XAxis
                             dataKey="date"
                             tickLine={false}
@@ -152,6 +147,7 @@ export function ChartAreaInteractive({ powerdata }) {
                                 });
                             }}
                         />
+
                         <ChartTooltip
                             cursor={false}
                             content={
@@ -166,6 +162,7 @@ export function ChartAreaInteractive({ powerdata }) {
                                             minute: "numeric",
                                         });
                                     }}
+                                    formatter={(value) => `${value} W`}
                                     indicator="dot"
                                 />
                             }

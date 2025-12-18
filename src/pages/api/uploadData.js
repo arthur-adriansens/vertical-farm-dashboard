@@ -15,7 +15,7 @@ export const POST = async ({ request, redirect }) => {
         if (Object.keys(data)?.length == 0) throw new Error("Nothing was inserted!");
     } catch (error) {
         console.log(error);
-        return new Response("Database error!", { status: 400 });
+        return new Response("Database error!", { status: 500 });
     }
 
     return new Response("Successfully added.", { status: 201 });
