@@ -12,10 +12,10 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 export const description = "Interactieve grafiek.";
 
 const chartConfig = {
-    // vermogen: {
-    //     label: "Vermogen",
-    //     color: "var(--primary)",
-    // },
+    vermogen: {
+        label: "Vermogen",
+        color: "var(--primary)",
+    },
     energie: {
         label: "Energie",
         color: "var(--primary)",
@@ -57,7 +57,7 @@ export function ChartAreaInteractive({ powerdata, energyData }) {
 
     const totalWattPerDay = {}; // voor kWh te berkenen
 
-    const filteredData = powerdata.filter((item) => {
+    let filteredData = powerdata.filter((item) => {
         const date = new Date(item.date);
 
         if (!totalWattPerDay[date.getDate()]) totalWattPerDay[date.getDate()] = [0, 0];
@@ -114,7 +114,7 @@ export function ChartAreaInteractive({ powerdata, energyData }) {
                 </CardAction>
             </CardHeader>
             <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-                <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
+                <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full relative">
                     <AreaChart data={filteredData}>
                         <defs>
                             <linearGradient id="fillVermogen" x1="0" y1="0" x2="0" y2="1">
@@ -162,14 +162,26 @@ export function ChartAreaInteractive({ powerdata, energyData }) {
                                             minute: "numeric",
                                         });
                                     }}
-                                    formatter={(value) => `${value} W`}
+                                    formatter={(value) => `${value} ${Number(value) < 1 ? "kWh" : "W"}`}
                                     indicator="dot"
                                 />
                             }
                         />
-                        <Area dataKey="power" type="natural" fill="url(#fillEnergie)" stroke="var(--color-energie)" stackId="a" />
-                        {/* <Area dataKey="current" type="natural" fill="url(#fillVermogen)" stroke="var(--color-vermogen)" stackId="a" /> */}
+                        <Area dataKey="power" type="natural" fill="url(#fillVermogen)" stroke="var(--color-vermogen)" stackId="a" />
+                        <Area
+                            dataKey={(value) => energyData[new Date(`${value.date.getDate()} Dec 2025`)]}
+                            type="natural"
+                            fill="url(#fillEnergie)"
+                            stroke="var(--color-energie)"
+                            stackId="b"
+                        />
                     </AreaChart>
+
+                    {filteredData.length == 0 && (
+                        <Card className="absolute m-auto top-0 bottom-0 left-0 right-0 w-fit h-fit px-6">
+                            <CardTitle>We hebben geen data van deze {timeRange == "30d" ? "maand" : timeRange == "7d" ? "week" : "dag"}.</CardTitle>
+                        </Card>
+                    )}
                 </ChartContainer>
             </CardContent>
         </Card>

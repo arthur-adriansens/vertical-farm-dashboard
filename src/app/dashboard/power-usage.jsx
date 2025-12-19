@@ -28,7 +28,7 @@ export default function Page({ powerdata }) {
     // Bereken kWh en dan gemiddeld kWh
     const { averageEnergy, energyData } = useMemo(() => {
         const totalWattPerDay = {};
-        const energyData = [];
+        const energyData = {};
 
         powerdata.forEach((item) => {
             const date = new Date(item.date);
@@ -45,11 +45,11 @@ export default function Page({ powerdata }) {
             // const intervalSeconds = 86400 / count; // interval (om de hoeveel seconden een waarde is): 86400s per dag / count ==> ongeveer elke 45 seconden
 
             const kWh = (averagePower * 24) / 1000;
-            energyData.push({ date: new Date(`${day} Dec 2025`), energy: kWh });
+            energyData[new Date(`${day} Dec 2025`)] = kWh;
         }
 
-        const totalEnergy = energyData.reduce((acc, curr) => acc + curr.energy, 0);
-        return { averageEnergy: totalEnergy / energyData.length, energyData };
+        const totalEnergy = Object.values(energyData).reduce((prev, next) => prev + next, 0);
+        return { averageEnergy: totalEnergy / Object.keys(energyData).length, energyData };
     }, [powerdata]);
 
     return (
